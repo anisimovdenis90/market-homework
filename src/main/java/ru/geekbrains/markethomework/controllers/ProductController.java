@@ -1,6 +1,6 @@
 package ru.geekbrains.markethomework.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,30 +9,23 @@ import ru.geekbrains.markethomework.services.ProductService;
 
 @Controller
 @RequestMapping("/products")
+@AllArgsConstructor
 public class ProductController {
     private ProductService productService;
 
-    private final String minValue = "" + Integer.MIN_VALUE;
-    private final String maxValue = "" + Integer.MAX_VALUE;
-
-    @Autowired
-    public void setProductService(ProductService productService) {
-        this.productService = productService;
-    }
-
     @GetMapping
-    public String showProducts(Model model, @RequestParam(defaultValue = minValue, name = "min") Integer minPrice, @RequestParam(defaultValue = maxValue, name = "max") Integer maxPrice, @RequestParam(defaultValue = "1", name = "p") Integer page) {
+    public String showProducts(Model model, @RequestParam(required = false, name = "min") Integer minPrice, @RequestParam(required = false, name = "max") Integer maxPrice, @RequestParam(defaultValue = "1", name = "p") Integer page) {
         if (page < 1) {
             page = 1;
         }
-        if (minPrice.toString().equals(minValue) && maxPrice.toString().equals(maxValue)) {
-            model.addAttribute("products", productService.findAll(page - 1, 5));
-        } else if (!minPrice.toString().equals(minValue) && maxPrice.toString().equals(maxValue)) {
-            model.addAttribute("products", productService.findAllByPriceGreaterThanEqual(minPrice, page - 1, 5));
-        } else if (minPrice.toString().equals(minValue)) {
-            model.addAttribute("products", productService.findAllByPriceLessThanEqual(maxPrice, page - 1, 5));
+        if (minPrice == null && maxPrice == null) {
+            model.addAttribute("products", productService.findAllProducts(page - 1, 5));
+        } else if (minPrice != null && maxPrice == null) {
+            model.addAttribute("products", productService.findProductsMinPrice(minPrice, page - 1, 5));
+        } else if (minPrice == null) {
+            model.addAttribute("products", productService.findProductsMaxPrice(maxPrice, page - 1, 5));
         } else {
-            model.addAttribute("products", productService.findAllByPriceGreaterThanEqualAndPriceLessThanEqual(minPrice, maxPrice, page - 1, 5));
+            model.addAttribute("products", productService.findProductsMinAndMaxPrice(minPrice, maxPrice, page - 1, 5));
         }
         return "products";
     }
