@@ -37,6 +37,7 @@
             <th>ID</th>
             <th>Название</th>
             <th>Цена</th>
+            <th>Действие</th>
         </tr>
         </thead>
         <tbody>
@@ -44,6 +45,7 @@
             <td th:text="${p.id}"/>
             <td th:text="${p.title}"/>
             <td th:text="${p.price}"/>
+            <td><a class="btn btn-success" th:href="@{'/products/edit/' + ${p.id}}">Редактировать</a></td>
         </tr>
         </tbody>
     </table>

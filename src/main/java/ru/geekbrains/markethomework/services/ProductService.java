@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.markethomework.entities.Product;
 import ru.geekbrains.markethomework.repositories.ProductRepository;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class ProductService {
@@ -15,5 +17,13 @@ public class ProductService {
 
     public Page<Product> findAllProducts(Specification<Product> spec, int page, int size) {
         return productRepository.findAll(spec, PageRequest.of(page, size));
+    }
+
+    public Optional<Product> findProductById(Long id) {
+        return productRepository.findById(id);
+    }
+
+    public void saveProduct(Product product) {
+        productRepository.save(product);
     }
 }

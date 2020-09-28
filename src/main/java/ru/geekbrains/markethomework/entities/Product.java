@@ -25,4 +25,10 @@ public class Product {
         this.title = title;
         this.price = price;
     }
+
+    public Product(Long id, String title, int price) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+    }
 }
