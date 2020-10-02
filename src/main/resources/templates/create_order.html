@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
 
-    <title>Каталог товаров</title>
+    <title>Оформление заказа</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -15,10 +15,8 @@
 
 <div class="container">
     <div th:replace="~{navigation :: navigation(Cart)}" />
-    <h1>Корзина</h1>
-
+    <h1>Оформление заказа</h1>
     <br>
-    <span th:if="${@cart.items.isEmpty()}">Корзина пуста</span>
     <table th:if="${!@cart.items.isEmpty()}" class="table table-hover">
         <thead class="thead-dark">
         <tr>
@@ -30,22 +28,33 @@
         <tbody>
         <tr th:each="oi : ${@cart.items}">
             <td th:text="${oi.product.title}"/>
-            <td>
-                <a class="btn btn-danger" th:href="@{'/cart/dec/' + ${oi.product.id}}">-</a>
-                <span th:text="${oi.quantity}"/>
-                <a class="btn btn-success" th:href="@{'/cart/inc/' + ${oi.product.id}}">+</a>
-                <a class="btn btn-danger" th:href="@{'/cart/remove/' + ${oi.product.id}}">X</a>
-            </td>
+            <td th:text="${oi.quantity}"/>
             <td th:text="${oi.quantity + ' x ' + oi.pricePerProduct + ' = ' + oi.price}"/>
         </tr>
         <tr>
             <td></td>
-            <td>Итого:</td>
+            <td>Общая стоимость заказа:</td>
             <td th:text="${@cart.price}"></td>
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary" th:href="@{/cart/order}" th:if="${!@cart.items.isEmpty()}">Оформить заказ</a>
+
+    <form method="post" th:action="@{/orders/new_order}">
+        <div class="form-group col-md-6">
+            <label for="nameInput">Укажите ваше имя</label>
+            <input class="form-control" name="name" type="text" id="nameInput" placeholder="Введите имя">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="phoneInput">Укажите ваш телефон</label>
+            <input class="form-control" name="phone" type="text" id="phoneInput" placeholder="Введите телефон">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="addressInput">Укажите ваш адрес</label>
+            <input class="form-control" name="address" type="text" id="addressInput" placeholder="Введите адрес">
+        </div>
+        <button class="btn btn-primary" type="submit">Оформить заказ</button>
+    </form>
+
 </div>
 
 </body>
