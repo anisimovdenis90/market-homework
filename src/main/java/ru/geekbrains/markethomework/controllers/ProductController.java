@@ -2,6 +2,7 @@ package ru.geekbrains.markethomework.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,17 +35,23 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public String productEdit(Model model, @PathVariable Long id) {
+    public String showEditForm(Model model, @PathVariable Long id) {
         Product product = productService.findProductById(id).orElseThrow(() -> new ResourceNotFoundException("Товар с id: " + id + " отсутствует"));
         model.addAttribute("product", product);
         return "product_edit";
     }
 
-    @PostMapping("/save/{id}")
-    public String saveProduct(@PathVariable Long id, @RequestParam String title, @RequestParam Integer price) {
-        if (!title.isBlank() && price != null) {
-            productService.saveProduct(new Product(id, title, price));
-        }
+    @PostMapping("/edit")
+    public String saveEditedProduct(@ModelAttribute Product product) {
+        productService.saveProduct(product);
         return "redirect:/products";
+    }
+
+    @GetMapping("/delete/{id")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String deleteOneProductById(@PathVariable Long id) {
+        productService.deleteById(id);
+        return "ok";
     }
 }

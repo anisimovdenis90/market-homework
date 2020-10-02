@@ -14,39 +14,34 @@
 <body>
 
 <div class="container">
-    <h1>Редактирование товара</h1>
-    <table class="table table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th>ID</th>
-            <th>Название</th>
-            <th>Цена</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${product.id}"/>
-            <td th:text="${product.title}"/>
-            <td th:text="${product.price}"/>
-        </tr>
-        </tbody>
-    </table>
-
-    <br>
-    <h3>Ввод новых данных</h3>
-    <form method="post" th:action="@{'/products/save/' + ${product.id}}">
-        <div class="form-group col-md-6">
-            <label for="newTitle">Новое имя</label>
-            <input class="form-control" name="title" type="text" id="newTitle">
+    <div th:replace="~{navigation :: navigation(Products)}"/>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title mt-2"><span>Изменение товара</span></h4>
+                </header>
+                <article class="card-body">
+                    <form th:action="@{/products/edit}" th:object="${product}" method="POST">
+                        <input th:field="*{id}" type="hidden" class="form-control">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label>Наименование</label>
+                                <input th:field="*{title}" type="text" class="form-control" placeholder="Название">
+                            </div>
+                            <div class="col form-group">
+                                <label>Цена</label>
+                                <input th:field="*{price}" type="number" class="form-control" placeholder="Цена">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Сохранить</button>
+                        </div>
+                    </form>
+                </article>
+            </div>
         </div>
-        <div class="form-group col-md-6">
-            <label for="newPrice">Новая цена</label>
-            <input class="form-control" name="price" type="number" id="newPrice">
-        </div>
-        <button class="btn btn-primary" type="submit">Сохранить</button>
-        <a class="btn btn-success" th:href="@{/products}">Вернуться к списку</a>
-    </form>
-    <br>
+    </div>
 </div>
 
 </body>

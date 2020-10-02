@@ -1,8 +1,33 @@
+CREATE TABLE `customers` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
 CREATE TABLE `products` (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(255) NOT NULL,
     `price` INTEGER NOT NULL,
     PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `orders` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `customer_id` BIGINT UNSIGNED NOT NULL,
+    `price` INTEGER NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`)
+);
+
+CREATE TABLE `order_items` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `product_id` BIGINT UNSIGNED NOT NULL,
+    `order_id` BIGINT UNSIGNED NOT NULL,
+    `price_per_product` INTEGER NOT NULL,
+    `price` INTEGER NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`),
+    FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`)
 );
 
 INSERT INTO `products` (`title`, `price`)
