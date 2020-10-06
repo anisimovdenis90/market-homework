@@ -13,10 +13,13 @@ CREATE TABLE `products` (
 
 CREATE TABLE `orders` (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `customer_id` BIGINT UNSIGNED NOT NULL,
+--    `customer_id` BIGINT UNSIGNED NOT NULL,
+    `customer_name` VARCHAR(255) NOT NULL,
+    `customer_phone` VARCHAR(255) NOT NULL,
+    `customer_address` VARCHAR(255) NOT NULL,
     `price` INTEGER NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`)
+    PRIMARY KEY (`id`)
+--    , FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`)
 );
 
 CREATE TABLE `order_items` (
@@ -25,6 +28,7 @@ CREATE TABLE `order_items` (
     `order_id` BIGINT UNSIGNED NOT NULL,
     `price_per_product` INTEGER NOT NULL,
     `price` INTEGER NOT NULL,
+    `quantity` INTEGER NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`product_id`) REFERENCES `products`(`id`),
     FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`)
