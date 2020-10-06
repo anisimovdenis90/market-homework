@@ -5,19 +5,24 @@ angular.module('app').controller('storeController', function ($scope, $http) {
         console.log('fill');
         $http.get(contextPath + '/api/v1/products')
             .then(function (response) {
+                $scope.newFilter = null;
                 $scope.Products = response.data;
             });
     };
 
-    // $scope.applyFilter = function () {
-    //     $http({
-    //         url: contextPath + '/api/v1/books',
-    //         method: "GET",
-    //         params: {obj_title: $scope.obj.title, obj_price: $scope.obj.price}
-    //     }).then(function (response) {
-    //         ...
-    //     });
-    // }
+     $scope.applyFilter = function () {
+         $http({
+             url: contextPath + '/api/v1/products',
+             method: "GET",
+             params: {
+             title: $scope.newFilter.title,
+             min_price: $scope.newFilter.min_price,
+             max_price: $scope.newFilter.max_price,
+             }
+         }).then(function (response) {
+             $scope.Products = response.data;
+         });
+     };
 
     $scope.submitCreateNewProduct = function () {
         $http.post(contextPath + '/api/v1/products', $scope.newProduct)
