@@ -1,4 +1,23 @@
 <div>
+
+    <h3>Фильтр</h3>
+    <form novalidate ng-submit="fillTable()">
+        <div class="form-group col-md-6">
+            <label for="titleInput">Название</label>
+            <input class="form-control" ng-model="newFilter.title" type="text" id="titleInput">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="minPriceInput">Минимальная цена</label>
+            <input class="form-control" ng-model="newFilter.min_price" type="number" id="minPriceInput">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="maxPriceInput">Максимальная цена</label>
+            <input class="form-control" ng-model="newFilter.max_price" type="number" id="maxPriceInput">
+        </div>
+        <button class="btn btn-primary" type="submit">Применить</button>
+        <a class="btn btn-primary" ng-click="clearFilter()">Очистить фильтр</a>
+    </form>
+
     <h3>Товары</h3>
     <table class="table table-hover" cellpadding="0" cellspacing="0">
         <tr>
@@ -7,13 +26,21 @@
         </tr>
         <tbody>
 
-        <tr ng-repeat="p in Products">
+        <tr ng-repeat="p in ProductsPage.content">
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
         </tr>
         </tbody>
     </table>
     <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" ng-repeat="pageIndex in PaginationArray">
+                <a class="page-link" ng-click="fillTable(pageIndex)">{{pageIndex}}</a>
+            </li>
+        </ul>
+    </nav>
 
     <h3>Добавить новый товар</h3>
     <form novalidate ng-submit="submitCreateNewProduct()">
