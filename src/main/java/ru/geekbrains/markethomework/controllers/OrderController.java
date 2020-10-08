@@ -21,8 +21,7 @@ public class OrderController {
     private Cart cart;
 
     @GetMapping
-    public String showOrders(Principal principal, Model model) {
-        model.addAttribute("username", principal.getName());
+    public String showOrders(Model model) {
         model.addAttribute("orders", orderService.findAll());
         return "orders";
     }
