@@ -3,41 +3,46 @@ package ru.geekbrains.markethomework.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.entities.Order;
+import ru.geekbrains.markethomework.entities.User;
 import ru.geekbrains.markethomework.services.OrderService;
+import ru.geekbrains.markethomework.services.UserService;
 import ru.geekbrains.markethomework.utils.Cart;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/orders")
 @AllArgsConstructor
 public class OrderController {
+    private UserService userService;
     private OrderService orderService;
     private Cart cart;
 
     @GetMapping
-    public String firstRequest(Model model) {
+    public String showOrders(Principal principal, Model model) {
+        model.addAttribute("username", principal.getName());
         model.addAttribute("orders", orderService.findAll());
         return "orders";
     }
 
-    @PostMapping("/new_order")
-    public String saveNewOrder(@RequestParam(name = "name") String customerName,
-                            @RequestParam(name = "phone") String customerPhone,
-                            @RequestParam(name = "address") String customerAddress
-    ) {
-        Order order = new Order();
-        order.setCustomerName(customerName);
-        order.setCustomerPhone(customerPhone);
-        order.setCustomerAddress(customerAddress);
-        cart.getItems().forEach(oi -> oi.setOrder(order));
-        order.setItems(cart.getItems());
-        order.setPrice(cart.getPrice());
+    @GetMapping("/create")
+    public String showOrderPage(Principal principal, Model model) {
+        model.addAttribute("username", principal.getName());
+        return "create_order";
+    }
+
+    @PostMapping("/confirm")
+    @ResponseBody
+    public String saveNewOrder(Principal principal,
+                              @RequestParam(name = "receiver_name") String receiverName,
+                              @RequestParam(name = "phone_number") String phone,
+                              @RequestParam(name = "address") String address
+                              ) {
+        User user = userService.findByUsername(principal.getName());
+        Order order = new Order(user, cart, address);
         orderService.saveNewOrder(order);
-        cart.getItems().clear();
-        return "redirect:/orders";
+        return "Ваш заказ #" + order.getId();
     }
 }

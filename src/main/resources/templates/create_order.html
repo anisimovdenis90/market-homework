@@ -14,10 +14,9 @@
 <body>
 
 <div class="container">
-    <div th:replace="~{navigation :: navigation(Cart)}" />
-    <h1>Оформление заказа</h1>
-    <br>
-    <table th:if="${!@cart.items.isEmpty()}" class="table table-hover">
+    <div th:replace="~{navigation :: navigation(Orders)}"/>
+    <h1 th:text="${username + ', Ваш заказ:'}"></h1>
+    <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
             <th>Название</th>
@@ -28,33 +27,24 @@
         <tbody>
         <tr th:each="oi : ${@cart.items}">
             <td th:text="${oi.product.title}"/>
-            <td th:text="${oi.quantity}"/>
+            <td>
+                <span th:text="${oi.quantity}"/>
+            </td>
             <td th:text="${oi.quantity + ' x ' + oi.pricePerProduct + ' = ' + oi.price}"/>
         </tr>
         <tr>
             <td></td>
-            <td>Общая стоимость заказа:</td>
+            <td>Итого:</td>
             <td th:text="${@cart.price}"></td>
         </tr>
         </tbody>
     </table>
-
-    <form method="post" th:action="@{/orders/new_order}">
-        <div class="form-group col-md-6">
-            <label for="nameInput">Укажите ваше имя</label>
-            <input class="form-control" name="name" type="text" id="nameInput" placeholder="Введите имя">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="phoneInput">Укажите ваш телефон</label>
-            <input class="form-control" name="phone" type="text" id="phoneInput" placeholder="Введите телефон">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="addressInput">Укажите ваш адрес</label>
-            <input class="form-control" name="address" type="text" id="addressInput" placeholder="Введите адрес">
-        </div>
-        <button class="btn btn-primary" type="submit">Оформить заказ</button>
+    <form method="post" th:action="@{/orders/confirm}">
+        <input type="text" required name="receiver_name" th:value="${username}" placeholder="Имя получателя">
+        <input type="text" required name="phone_number" placeholder="Телефон">
+        <input type="text" required name="address" placeholder="Адрес доставки">
+        <button class="btn btn-success" type="submit">Подтвердить</button>
     </form>
-
 </div>
 
 </body>

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
-import ru.geekbrains.markethomework.entities.Order;
 import ru.geekbrains.markethomework.entities.OrderItem;
 import ru.geekbrains.markethomework.entities.Product;
 
@@ -14,7 +13,6 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -83,5 +81,10 @@ public class Cart {
         for (OrderItem o : items) {
             price += o.getPrice();
         }
+    }
+
+    public void clear() {
+        items.clear();
+        price = 0;
     }
 }

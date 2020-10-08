@@ -45,7 +45,7 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary" th:href="@{/cart/order}" th:if="${!@cart.items.isEmpty()}">Оформить заказ</a>
+    <a class="btn btn-primary" th:href="@{/orders/create}" th:if="${!@cart.items.isEmpty()}">Оформить заказ</a>
 </div>
 
 </body>

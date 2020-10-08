@@ -1,8 +1,39 @@
-CREATE TABLE `customers` (
+CREATE TABLE `users` (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
+    `username` VARCHAR(30) NOT NULL,
+    `password` VARCHAR(80) NOT NULL,
+    `email` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `roles` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `users_roles` (
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `role_id` BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY (`user_id`, `role_id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+    FOREIGN KEY (`role_id`) REFERENCES `roles`(`id`)
+);
+
+INSERT INTO `roles` (`name`)
+VALUES
+('ROLE_USER'),
+('ROLE_ADMIN'),
+('SOMETHING');
+
+INSERT INTO `users` (`username`, `password`, `email`)
+VALUES
+('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user@gmail.com');
+
+INSERT INTO `users_roles` (`user_id`, `role_id`)
+VALUES
+(1, 1),
+(1, 2);
 
 CREATE TABLE `products` (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -13,13 +44,11 @@ CREATE TABLE `products` (
 
 CREATE TABLE `orders` (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
---    `customer_id` BIGINT UNSIGNED NOT NULL,
-    `customer_name` VARCHAR(255) NOT NULL,
-    `customer_phone` VARCHAR(255) NOT NULL,
-    `customer_address` VARCHAR(255) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
     `price` INTEGER NOT NULL,
-    PRIMARY KEY (`id`)
---    , FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`)
+    `address` VARCHAR(1000) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 );
 
 CREATE TABLE `order_items` (
