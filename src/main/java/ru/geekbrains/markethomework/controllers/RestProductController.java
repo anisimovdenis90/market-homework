@@ -1,12 +1,12 @@
 package ru.geekbrains.markethomework.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.entities.Product;
 import ru.geekbrains.markethomework.services.ProductService;
 import ru.geekbrains.markethomework.utils.ProductFilter;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,9 +16,15 @@ public class RestProductController {
     private ProductService productService;
 
     @GetMapping
-    public List<Product> getAllProducts(@RequestParam Map<String, String> params) {
+    public Page<Product> getAllProducts(
+            @RequestParam(defaultValue = "1", name = "p") Integer page,
+            @RequestParam Map<String, String> params
+    ) {
+        if (page < 1) {
+            page = 1;
+        }
         ProductFilter productFilter = new ProductFilter(params);
-        return productService.findAllProducts(productFilter.getSpec(), 0, 10).getContent();
+        return productService.findAllProducts(productFilter.getSpec(), page - 1, 5);
     }
 
     @GetMapping("/{id}")
