@@ -11,12 +11,15 @@ import ru.geekbrains.markethomework.entities.User;
 import ru.geekbrains.markethomework.repositories.RoleRepository;
 import ru.geekbrains.markethomework.services.UserService;
 
+import java.util.Arrays;
+
 @Controller
 @RequestMapping("/signup")
 @AllArgsConstructor
 public class UserController {
     private UserService userService;
     private RoleRepository roleRepository;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping
     public String showSignupForm() {
@@ -27,7 +30,7 @@ public class UserController {
     public String saveNewUser(@RequestParam(name = "username") String username,
                               @RequestParam(name = "password") String password,
                               @RequestParam(name = "email") String email) {
-        User newUser = new User(username, new BCryptPasswordEncoder().encode(password), email, roleRepository.findById(1L).get());
+        User newUser = new User(username, passwordEncoder.encode(password), email, Arrays.asList(roleRepository.findById(1L).get()));
         userService.saveNewUser(newUser);
         return "redirect:/products";
     }
