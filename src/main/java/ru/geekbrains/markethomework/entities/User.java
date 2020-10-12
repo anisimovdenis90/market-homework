@@ -4,9 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Data
@@ -33,7 +31,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
-    public User(String username, String password, String email, List<Role> roles) {
+    public User(String username, String password, String email, Collection<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
