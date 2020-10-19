@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Controller
-@RequestMapping("/cart")
-@AllArgsConstructor
+//@Controller
+//@RequestMapping("/cart")
+//@AllArgsConstructor
 public class CartController {
     private ProductService productService;
     private Cart cart;
@@ -30,14 +30,13 @@ public class CartController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        Product p = productService.findProductById(productId).orElseThrow(() -> new ResourceNotFoundException("Товар с id: " + productId + " не существует (добавление в корзину)"));
-        cart.addOrIncrement(p);
+        cart.addOrIncrement(productId);
         response.sendRedirect(request.getHeader("referer"));
     }
 
     @GetMapping("/inc/{product_id}")
     public String addOrIncrementProduct(@PathVariable(name = "product_id") Long productId) {
-        cart.incrementOnly(productId);
+        cart.addOrIncrement(productId);
         return "redirect:/cart";
     }
 

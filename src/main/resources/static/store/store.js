@@ -32,14 +32,15 @@ angular.module('app').controller('storeController', function ($scope, $http) {
         $scope.fillTable();
      };
 
-    $scope.submitCreateNewProduct = function () {
-        $http.post(contextPath + '/api/v1/products', $scope.newProduct)
+     $scope.addToCart = function (productId) {
+        $http({
+            url: contextPath + '/api/v1/cart/add/' + productId,
+            method: 'GET'
+        })
             .then(function (response) {
-                // $scope.Products.push(response.data);
-                $scope.newProduct = null;
-                $scope.fillTable();
+                console.log('ok');
             });
-    };
+     };
 
     $scope.fillTable();
 });

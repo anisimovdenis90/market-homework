@@ -20,15 +20,4 @@ public class Product {
 
     @Column(name = "price")
     private int price;
-
-    public Product(String title, int price) {
-        this.title = title;
-        this.price = price;
-    }
-
-    public Product(Long id, String title, int price) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-    }
 }

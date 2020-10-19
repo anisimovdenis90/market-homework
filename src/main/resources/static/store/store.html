@@ -1,5 +1,4 @@
 <div>
-
     <h3>Фильтр</h3>
     <form novalidate ng-submit="fillTable()">
         <div class="form-group col-md-6">
@@ -14,8 +13,10 @@
             <label for="maxPriceInput">Максимальная цена</label>
             <input class="form-control" ng-model="newFilter.max_price" type="number" id="maxPriceInput">
         </div>
-        <button class="btn btn-primary" type="submit">Применить</button>
-        <a class="btn btn-primary" ng-click="clearFilter()">Очистить фильтр</a>
+        <div>
+            <button class="btn btn-primary" type="submit">Применить</button>
+            <button class="btn btn-primary" ng-click="clearFilter()">Очистить фильтр</button>
+        </div>
     </form>
 
     <h3>Товары</h3>
@@ -23,12 +24,15 @@
         <tr>
             <td>Название</td>
             <td>Цена</td>
+            <td></td>
         </tr>
         <tbody>
-
         <tr ng-repeat="p in ProductsPage.content">
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
+            <td>
+                <button class="btn btn-success" ng-click="addToCart(p.id)">Добавить в корзину</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -41,19 +45,4 @@
             </li>
         </ul>
     </nav>
-
-    <h3>Добавить новый товар</h3>
-    <form novalidate ng-submit="submitCreateNewProduct()">
-        <div class="form-group col-md-6">
-            <label for="elementTitle">Название</label>
-            <input class="form-control" type="text" ng-model="newProduct.title" id="elementTitle">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="elementPrice">Цена</label>
-            <input class="form-control" type="number" ng-model="newProduct.price" id="elementPrice">
-        </div>
-        <div>
-            <button class="btn btn-success" type="submit">Сохранить</button>
-        </div>
-    </form>
 </div>
