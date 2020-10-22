@@ -10,12 +10,14 @@ angular.module('app').controller('storeController', function ($scope, $http) {
                 p: pageIndex,
                 title: $scope.newFilter ? $scope.newFilter.title : null,
                 min_price: $scope.newFilter ? $scope.newFilter.min_price : null,
-                max_price: $scope.newFilter ? $scope.newFilter.max_price : null
+                max_price: $scope.newFilter ? $scope.newFilter.max_price : null,
+                category: $scope.newFilter ? $scope.newFilter.category : null
             }
         }).then(function (response) {
-            $scope.ProductsPage = response.data;
+            console.log(response.data);
+            $scope.Categories = response.data[0];
+            $scope.ProductsPage = response.data[1];
             $scope.PaginationArray = $scope.generatePagesInd(1, $scope.ProductsPage.totalPages);
-            console.log($scope.ProductsPage);
         });
     };
 

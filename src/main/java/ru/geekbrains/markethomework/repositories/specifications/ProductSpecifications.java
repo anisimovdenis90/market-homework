@@ -3,6 +3,11 @@ package ru.geekbrains.markethomework.repositories.specifications;
 import org.springframework.data.jpa.domain.Specification;
 import ru.geekbrains.markethomework.entities.Product;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 public class ProductSpecifications {
     public static Specification<Product> priceGreaterOrEqualThan(int minPrice) {
         return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice);
@@ -14,5 +19,14 @@ public class ProductSpecifications {
 
     public static Specification<Product> titleLike(String titlePart) {
         return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("title"), String.format("%%%s%%", titlePart));
+    }
+
+    public static Specification<Product> categoryId(Long categoryId) {
+        return new Specification<Product>() {
+            @Override
+            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.equal(root.get("category").get("id"), categoryId);
+            }
+        };
     }
 }

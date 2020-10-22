@@ -13,6 +13,15 @@
             <label for="maxPriceInput">Максимальная цена</label>
             <input class="form-control" ng-model="newFilter.max_price" type="number" id="maxPriceInput">
         </div>
+
+        <div class="form-group col-md-6">
+            <label for="exampleFormControlSelect1">Категория товара</label>
+            <select class="form-control" ng-model="newFilter.category" id="exampleFormControlSelect1">
+                <option ng-repeat="c in Categories" value="{{c.id}}">{{c.title}}</option>
+            </select>
+        </div>
+
+
         <div>
             <button class="btn btn-primary" type="submit">Применить</button>
             <button class="btn btn-primary" ng-click="clearFilter()">Очистить фильтр</button>
