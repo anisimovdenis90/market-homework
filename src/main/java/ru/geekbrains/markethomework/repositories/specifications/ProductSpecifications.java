@@ -22,11 +22,6 @@ public class ProductSpecifications {
     }
 
     public static Specification<Product> categoryId(Long categoryId) {
-        return new Specification<Product>() {
-            @Override
-            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("category").get("id"), categoryId);
-            }
-        };
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("category").get("id"), categoryId);
     }
 }
