@@ -28,12 +28,6 @@ public class OrderController {
         return orders;
     }
 
-    @GetMapping("/create")
-    public String showOrderPage(Principal principal, Model model) {
-        model.addAttribute("username", principal.getName());
-        return "create_order";
-    }
-
     @PostMapping(consumes = "application/json", produces = "application/json")
     public Order saveNewOrder(@RequestParam(name = "username") String receiverName,
                               @RequestParam(name = "telephone") String telephone,
