@@ -1,6 +1,6 @@
 package ru.geekbrains.markethomework.services;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.markethomework.entities.Order;
 import ru.geekbrains.markethomework.entities.User;
@@ -9,9 +9,9 @@ import ru.geekbrains.markethomework.repositories.OrderRepository;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OrderService {
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public List<Order> findAll() {
         return orderRepository.findAll();

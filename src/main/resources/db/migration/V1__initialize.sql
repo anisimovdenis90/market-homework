@@ -35,11 +35,19 @@ VALUES
 (1, 1),
 (1, 2);
 
+CREATE TABLE `categories` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
 CREATE TABLE `products` (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(255) NOT NULL,
     `price` INTEGER NOT NULL,
-    PRIMARY KEY (`id`)
+    `category_id` BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY(`category_id`) REFERENCES `categories`(`id`)
 );
 
 CREATE TABLE `orders` (
@@ -63,25 +71,36 @@ CREATE TABLE `order_items` (
     FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`)
 );
 
-INSERT INTO `products` (`title`, `price`)
+INSERT INTO `categories` (`title`)
 VALUES
-('Milk1', 60),
-('Cheese1', 80),
-('Bread1', 25),
-('Chocolate1', 100),
-('Meat1', 250),
-('Milk2', 50),
-('Cheese2', 70),
-('Bread2', 35),
-('Chocolate2', 90),
-('Meat2', 260),
-('Milk3', 70),
-('Cheese3', 90),
-('Bread3', 15),
-('Chocolate3', 110),
-('Meat3', 150),
-('Milk4', 55),
-('Cheese4', 95),
-('Bread4', 55),
-('Chocolate4', 105),
-('Meat4', 380);
+('Продукты питания'),
+('Строительные материалы'),
+('Бытовая техника');
+
+INSERT INTO `products` (`title`, `price`, `category_id`)
+VALUES
+('Milk1', 60, 1),
+('Cheese1', 80, 1),
+('Bread1', 25, 1),
+('Chocolate1', 100, 1),
+('Meat1', 250, 1),
+('Milk2', 50, 1),
+('Cheese2', 70, 1),
+('Bread2', 35, 1),
+('Chocolate2', 90, 1),
+('Meat2', 260, 1),
+('Milk3', 70, 1),
+('Cheese3', 90, 1),
+('Bread3', 15, 1),
+('Chocolate3', 110, 1),
+('Meat3', 150, 1),
+('Milk4', 55, 1),
+('Cheese4', 95, 1),
+('Bread4', 55, 1),
+('Chocolate4', 105, 1),
+('Meat4', 380, 1),
+('Toaster1', 900, 3),
+('Toaster2', 980, 3),
+('Toaster3', 1200, 3),
+('Hammer1', 450, 2),
+('Hammer2', 670, 2);
