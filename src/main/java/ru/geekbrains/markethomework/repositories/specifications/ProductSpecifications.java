@@ -3,11 +3,6 @@ package ru.geekbrains.markethomework.repositories.specifications;
 import org.springframework.data.jpa.domain.Specification;
 import ru.geekbrains.markethomework.entities.Product;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
 public class ProductSpecifications {
     public static Specification<Product> priceGreaterOrEqualThan(int minPrice) {
         return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice);

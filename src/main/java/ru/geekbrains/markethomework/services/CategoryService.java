@@ -1,6 +1,6 @@
 package ru.geekbrains.markethomework.services;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.markethomework.entities.Category;
 import ru.geekbrains.markethomework.repositories.CategoryRepository;
@@ -8,9 +8,9 @@ import ru.geekbrains.markethomework.repositories.CategoryRepository;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CategoryService {
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     public List<Category> findAll() {
         return categoryRepository.findAll();

@@ -9,6 +9,7 @@ import ru.geekbrains.markethomework.entities.OrderItem;
 public class OrderItemDto {
     private Long productId;
     private String productTitle;
+    private String categoryTitle;
     private int quantity;
     private int pricePerProduct;
     private int price;
@@ -16,6 +17,7 @@ public class OrderItemDto {
     public OrderItemDto(OrderItem o) {
         this.productId = o.getProduct().getId();
         this.productTitle = o.getProduct().getTitle();
+        this.productTitle = o.getProduct().getCategory().getTitle();
         this.quantity = o.getQuantity();
         this.pricePerProduct = o.getPricePerProduct();
         this.price = o.getPrice();
