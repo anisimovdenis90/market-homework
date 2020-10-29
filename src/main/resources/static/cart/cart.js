@@ -38,5 +38,20 @@ angular.module('app').controller('cartController', function ($scope, $http) {
         });
     };
 
+
+    $scope.createOrder = function () {
+        $http({
+            url: contextPath + '/api/v1/orders/',
+            method: 'POST',
+            params: {
+                username: username,
+                telephone: telephone,
+                address: address,
+            }
+        }).then(function (response) {
+                $scope.order = response.data;
+            });
+    };
+
     $scope.cartContentRequest();
 });

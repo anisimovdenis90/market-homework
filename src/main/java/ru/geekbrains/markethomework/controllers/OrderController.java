@@ -11,21 +11,21 @@ import ru.geekbrains.markethomework.services.UserService;
 import ru.geekbrains.markethomework.utils.Cart;
 
 import java.security.Principal;
+import java.util.List;
 
-@Controller
-@RequestMapping("/orders")
+@RestController
+@RequestMapping("api/v1/orders")
 @AllArgsConstructor
 public class OrderController {
     private UserService userService;
     private OrderService orderService;
     private Cart cart;
 
-    @GetMapping
-    public String showOrders(Principal principal, Model model) {
+    @GetMapping(produces = "application/json")
+    public List<Order> showOrders(Principal principal) {
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute("orders", orderService.findOrdersByUser(user));
-        model.addAttribute("username", principal.getName());
-        return "orders";
+        List<Order> orders = orderService.findOrdersByUser(user);
+        return orders;
     }
 
     @GetMapping("/create")
@@ -34,16 +34,16 @@ public class OrderController {
         return "create_order";
     }
 
-    @PostMapping("/confirm")
-    @ResponseBody
-    public String saveNewOrder(Principal principal,
-                              @RequestParam(name = "receiver_name") String receiverName,
-                              @RequestParam(name = "phone_number") String phone,
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public Order saveNewOrder(@RequestParam(name = "username") String receiverName,
+                              @RequestParam(name = "telephone") String telephone,
                               @RequestParam(name = "address") String address
                               ) {
-        User user = userService.findByUsername(principal.getName());
+        System.out.println(receiverName);
+        System.out.println(address);
+        User user = userService.findByUsername(receiverName);
         Order order = new Order(user, cart, address);
         orderService.saveNewOrder(order);
-        return "Ваш заказ #" + order.getId();
+        return order;
     }
 }
