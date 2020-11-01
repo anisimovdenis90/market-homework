@@ -1,5 +1,6 @@
 package ru.geekbrains.markethomework.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
@@ -25,18 +26,23 @@ public class Order {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "phone")
+    private String phone;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "order")
+    @JsonIgnore
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<OrderItem> items;
 
-    public Order(User user, Cart cart, String address) {
+    public Order(User user, Cart cart, String address, String phone) {
         this.user = user;
         this.price = cart.getPrice();
         this.address = address;
+        this.phone = phone;
         this.items = new ArrayList<>();
         cart.getItems().stream().forEach(oi -> {
             oi.setOrder(this);

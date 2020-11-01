@@ -1,5 +1,5 @@
 <div>
-    <h3>Корзина</h3>
+    <h3>Заказы</h3>
     <table class="table table-hover" cellpadding="0" cellspacing="0">
         <tr>
             <th>ID</th>
@@ -9,38 +9,13 @@
         </tr>
         <tbody>
 
-        <tr ng-repeat="o in OrdersList">
-            <td>{{oi.id}}</td>
-            <td>{{oi.user.getId()}}</td>
-            <td>{{oi.price}}</td>
-            <td>{{oi.address}}</td>
+        <tr ng-repeat="o in orders">
+            <td>{{o.orderId}}</td>
+            <td>{{o.username}}</td>
+            <td>{{o.price}}</td>
+            <td>{{o.address}}</td>
         </tr>
         </tbody>
     </table>
 </div>
-
-
-
-<!--<div class="container">-->
-<!--    <span th:if="${orders.isEmpty()}">Заказы отсутствуют</span>-->
-<!--    <h1 th:if="${!orders.isEmpty()}" th:text="${username + ', список Ваших заказов:'}"></h1>-->
-<!--    <table th:if="${!orders.isEmpty()}" class="table table-hover">-->
-<!--        <thead class="thead-dark">-->
-<!--        <tr>-->
-<!--            <th>ID</th>-->
-<!--            <th>Клиент</th>-->
-<!--            <th>Цена</th>-->
-<!--            <th>Адрес доставки</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="o : ${orders}">-->
-<!--            <td th:text="${o.id}"/>-->
-<!--            <td th:text="${o.user.getId()}"/>-->
-<!--            <td th:text="${o.price}"/>-->
-<!--            <td th:text="${o.address}"/>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
-<!--</div>-->
 

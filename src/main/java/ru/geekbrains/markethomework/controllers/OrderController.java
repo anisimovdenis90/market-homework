@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.markethomework.configs.JwtTokenUtil;
+import ru.geekbrains.markethomework.dto.OrderDto;
 import ru.geekbrains.markethomework.entities.Order;
 import ru.geekbrains.markethomework.entities.User;
 import ru.geekbrains.markethomework.services.OrderService;
@@ -12,6 +14,7 @@ import ru.geekbrains.markethomework.utils.Cart;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/orders")
@@ -22,22 +25,20 @@ public class OrderController {
     private Cart cart;
 
     @GetMapping(produces = "application/json")
-    public List<Order> showOrders(Principal principal) {
+    public List<OrderDto> showOrders(Principal principal) {
         User user = userService.findByUsername(principal.getName());
         List<Order> orders = orderService.findOrdersByUser(user);
-        return orders;
+        List<OrderDto> ordersDto = orders.stream().map(OrderDto::new).collect(Collectors.toList());
+        return ordersDto;
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
-    public Order saveNewOrder(@RequestParam(name = "username") String receiverName,
-                              @RequestParam(name = "telephone") String telephone,
-                              @RequestParam(name = "address") String address
+    @PostMapping
+    public void saveNewOrder(Principal principal,
+                              @RequestParam(name = "address") String address,
+                              @RequestParam(name = "phone") String phone
                               ) {
-        System.out.println(receiverName);
-        System.out.println(address);
-        User user = userService.findByUsername(receiverName);
-        Order order = new Order(user, cart, address);
+        User user = userService.findByUsername(principal.getName());
+        Order order = new Order(user, cart, address, phone);
         orderService.saveNewOrder(order);
-        return order;
     }
 }
