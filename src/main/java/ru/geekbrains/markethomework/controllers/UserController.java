@@ -2,7 +2,6 @@ package ru.geekbrains.markethomework.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.entities.User;
 import ru.geekbrains.markethomework.services.RoleService;
@@ -10,7 +9,7 @@ import ru.geekbrains.markethomework.services.UserService;
 
 import java.util.Arrays;
 
-@Controller
+@RestController
 @RequestMapping("/register")
 @AllArgsConstructor
 public class UserController {
