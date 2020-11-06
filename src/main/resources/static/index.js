@@ -19,6 +19,10 @@
                 templateUrl: 'signup/signup.html',
                 controller: 'signupController'
             })
+            .when('/user', {
+                templateUrl: 'user/user.html',
+                controller: 'userController'
+            })
             .when('/store', {
                 templateUrl: 'store/store.html',
                 controller: 'storeController'
@@ -30,7 +34,8 @@
             .when('/cart', {
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
-            }).when('/order', {
+            })
+            .when('/order', {
                 templateUrl: 'order/order.html',
                 controller: 'orderController'
             });

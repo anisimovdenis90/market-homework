@@ -1,0 +1,74 @@
+<div>
+    <h3>Личный кабинет</h3>
+
+    <form novalidate ng-submit="saveUserProfile()">
+        <div class="form-group col-md-6">
+            <table class="table table-hover" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>Имя</td>
+                    <td>{{userProfile.firstname}}</td>
+                </tr>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.firstname" placeholder="Введите новое имя">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table table-hover" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>Фамилия</td>
+                    <td>{{userProfile.lastname}}</td>
+                </tr>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.lastname" placeholder="Введите новую фамилию">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table table-hover" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>День рождения</td>
+                    <td>{{userProfile.birthday}}</td>
+                </tr>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.birthday" placeholder="Введите новую дату рождения">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table table-hover" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>Телефон</td>
+                    <td>{{userProfile.phone}}</td>
+                </tr>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.phone" placeholder="Введите новый телефон">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table table-hover" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>Город</td>
+                    <td>{{userProfile.hometown}}</td>
+                </tr>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.hometown" placeholder="Введите новый город проживания">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table table-hover" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>Пол</td>
+                    <td>{{userProfile.gender}}</td>
+                </tr>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.gender" placeholder="Введите пол для изменения">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="password">Введите пароль для подтверждения изменений</label>
+            <input class="form-control" type="text" ng-model="newProfile.password" id="password">
+        </div>
+
+        <div>
+            <button class="btn btn-success" type="submit">Сохранить изменения</button>
+        </div>
+    </form>
+</div>

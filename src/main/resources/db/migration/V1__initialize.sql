@@ -1,9 +1,22 @@
+CREATE TABLE `profiles` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `firstname` VARCHAR(30) DEFAULT NULL,
+    `lastname` VARCHAR(30) DEFAULT NULL,
+    `birthday` DATE DEFAULT NULL,
+    `phone` VARCHAR(30) DEFAULT NULL,
+    `gender` CHAR(1) DEFAULT NULL,
+    `hometown` VARCHAR(50) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+);
+
 CREATE TABLE `users` (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(30) NOT NULL,
     `password` VARCHAR(80) NOT NULL,
     `email` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (`id`)
+    `profile_id` BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`profile_id`) REFERENCES `profiles`(`id`)
 );
 
 CREATE TABLE `roles` (
@@ -26,9 +39,13 @@ VALUES
 ('ROLE_ADMIN'),
 ('SOMETHING');
 
-INSERT INTO `users` (`username`, `password`, `email`)
+INSERT INTO `profiles` (`firstname`, `lastname`, `birthday`, `phone`, `gender`, `hometown`)
 VALUES
-('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user@gmail.com');
+('Bob', 'Cane', '1990-07-04', '89992345643', 'M', 'Moscow');
+
+INSERT INTO `users` (`username`, `password`, `email`, `profile_id`)
+VALUES
+('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user@gmail.com', 1);
 
 INSERT INTO `users_roles` (`user_id`, `role_id`)
 VALUES
