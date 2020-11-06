@@ -2,11 +2,13 @@ package ru.geekbrains.markethomework.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.markethomework.dto.OrderDto;
 import ru.geekbrains.markethomework.entities.Order;
 import ru.geekbrains.markethomework.entities.User;
 import ru.geekbrains.markethomework.repositories.OrderRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,10 @@ public class OrderService {
 
     public List<Order> findOrdersByUser(User user) {
         return orderRepository.findAllByUserId(user.getId());
+    }
+
+    public List<OrderDto> findAllOrdersDtoByUsername(String username) {
+        return orderRepository.findAllByUsername(username).stream().map(OrderDto::new).collect(Collectors.toList());
     }
 
     public List<Order> findOrdersByUsername(String username) {
