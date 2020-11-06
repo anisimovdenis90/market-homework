@@ -1,6 +1,7 @@
 package ru.geekbrains.markethomework.controllers;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,9 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/products")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductController {
-    private ProductService productService;
-    private CategoryService categoryService;
+    private final ProductService productService;
 
     @GetMapping(produces = "application/json") // /api/v1/products
     public Page<ProductDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,

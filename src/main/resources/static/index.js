@@ -15,6 +15,10 @@
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
             })
+            .when('/signup', {
+                templateUrl: 'signup/signup.html',
+                controller: 'signupController'
+            })
             .when('/store', {
                 templateUrl: 'store/store.html',
                 controller: 'storeController'
@@ -26,6 +30,9 @@
             .when('/cart', {
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
+            }).when('/order', {
+                templateUrl: 'order/order.html',
+                controller: 'orderController'
             });
 
         $httpProvider.interceptors.push(function ($q, $location) {

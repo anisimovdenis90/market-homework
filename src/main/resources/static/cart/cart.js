@@ -38,5 +38,20 @@ angular.module('app').controller('cartController', function ($scope, $http) {
         });
     };
 
+    $scope.createOrder = function () {
+        $http({
+            url: contextPath + '/api/v1/orders',
+            method: 'POST',
+            params: {
+                address: $scope.newOrder.address,
+                phone: $scope.newOrder.phone
+            }
+        }).then(function (response) {
+                alert('Добавлен новый заказ');
+                $scope.newOrder = null;
+                $scope.cartContentRequest();
+            });
+    };
+
     $scope.cartContentRequest();
 });

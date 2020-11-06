@@ -55,6 +55,7 @@ CREATE TABLE `orders` (
     `user_id` BIGINT UNSIGNED NOT NULL,
     `price` INTEGER NOT NULL,
     `address` VARCHAR(1000) NOT NULL,
+    `phone` VARCHAR(30) NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 );
