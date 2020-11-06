@@ -17,6 +17,7 @@ angular.module('app').controller('userController', function ($scope, $http) {
         }).then(function (response) {
             alert('Изменения успешно сохранены');
             $scope.newProfile = null;
+            $scope.fillTable();
        });
     };
 

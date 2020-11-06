@@ -59,12 +59,20 @@
                     <td>{{userProfile.gender}}</td>
                 </tr>
             </table>
-            <input class="form-control" type="text" ng-model="newProfile.gender" placeholder="Введите пол для изменения">
+            <span>Выберите пол: </span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="М" ng-model="newProfile.gender">
+                <label class="form-check-label" for="inlineRadio1">М</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Ж" ng-model="newProfile.gender">
+                <label class="form-check-label" for="inlineRadio2">Ж</label>
+            </div>
         </div>
 
         <div class="form-group col-md-6">
             <label for="password">Введите пароль для подтверждения изменений</label>
-            <input class="form-control" type="text" ng-model="newProfile.password" id="password">
+            <input class="form-control" type="password" ng-model="newProfile.password" id="password">
         </div>
 
         <div>
