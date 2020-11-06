@@ -1,6 +1,6 @@
 package ru.geekbrains.markethomework.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.entities.User;
@@ -11,11 +11,11 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("/register")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
-    private UserService userService;
-    private RoleService roleService;
-    private BCryptPasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping
     public void saveNewUser(@RequestParam String username,

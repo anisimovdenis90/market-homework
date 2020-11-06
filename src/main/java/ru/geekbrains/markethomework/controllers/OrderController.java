@@ -26,8 +26,8 @@ public class OrderController {
 
     @GetMapping(produces = "application/json")
     public List<OrderDto> showOrders(Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        List<Order> orders = orderService.findOrdersByUser(user);
+//        User user = userService.findByUsername(principal.getName());
+        List<Order> orders = orderService.findOrdersByUsername(principal.getName());
         List<OrderDto> ordersDto = orders.stream().map(OrderDto::new).collect(Collectors.toList());
         return ordersDto;
     }
@@ -36,7 +36,7 @@ public class OrderController {
     public void saveNewOrder(Principal principal,
                               @RequestParam(name = "address") String address,
                               @RequestParam(name = "phone") String phone
-                              ) {
+    ) {
         User user = userService.findByUsername(principal.getName());
         Order order = new Order(user, cart, address, phone);
         orderService.saveNewOrder(order);
