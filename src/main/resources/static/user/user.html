@@ -1,63 +1,75 @@
 <div>
     <h3>Личный кабинет</h3>
 
-    <form novalidate ng-submit="saveUserProfile()">
+    <form ng-submit="saveUserProfile()">
         <div class="form-group col-md-6">
-            <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <table class="table">
+                <thead class="thead-dark">
                 <tr>
-                    <td>Имя</td>
-                    <td>{{userProfile.firstname}}</td>
+                    <th scope="col">Имя</th>
+                    <th scope="col">{{userProfile.firstname}}</th>
                 </tr>
+                </thead>
             </table>
             <input class="form-control" type="text" ng-model="newProfile.firstname" placeholder="Введите новое имя">
         </div>
 
         <div class="form-group col-md-6">
-            <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <table class="table">
+                <thead class="thead-dark">
                 <tr>
-                    <td>Фамилия</td>
-                    <td>{{userProfile.lastname}}</td>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">{{userProfile.lastname}}</th>
                 </tr>
+                </thead>
             </table>
             <input class="form-control" type="text" ng-model="newProfile.lastname" placeholder="Введите новую фамилию">
         </div>
 
         <div class="form-group col-md-6">
-            <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <table class="table">
+                <thead class="thead-dark">
                 <tr>
-                    <td>День рождения</td>
-                    <td>{{userProfile.birthday}}</td>
+                    <th scope="col">День рождения</th>
+                    <th scope="col">{{userProfile.birthday}}</th>
                 </tr>
+                </thead>
             </table>
             <input class="form-control" type="text" ng-model="newProfile.birthday" placeholder="Введите новую дату рождения">
         </div>
 
         <div class="form-group col-md-6">
-            <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <table class="table">
+                <thead class="thead-dark">
                 <tr>
-                    <td>Телефон</td>
-                    <td>{{userProfile.phone}}</td>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">{{userProfile.phone}}</th>
                 </tr>
+                </thead>
             </table>
             <input class="form-control" type="text" ng-model="newProfile.phone" placeholder="Введите новый телефон">
         </div>
 
         <div class="form-group col-md-6">
-            <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <table class="table">
+                <thead class="thead-dark">
                 <tr>
-                    <td>Город</td>
-                    <td>{{userProfile.hometown}}</td>
+                    <th scope="col">Город</th>
+                    <th scope="col">{{userProfile.hometown}}</th>
                 </tr>
+                </thead>
             </table>
             <input class="form-control" type="text" ng-model="newProfile.hometown" placeholder="Введите новый город проживания">
         </div>
 
         <div class="form-group col-md-6">
-            <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <table class="table">
+                <thead class="thead-dark">
                 <tr>
-                    <td>Пол</td>
-                    <td>{{userProfile.gender}}</td>
+                    <th scope="col">Пол</th>
+                    <th scope="col">{{userProfile.gender}}</th>
                 </tr>
+                </thead>
             </table>
             <span>Выберите пол: </span>
             <div class="form-check form-check-inline">
@@ -69,10 +81,10 @@
                 <label class="form-check-label" for="inlineRadio2">Ж</label>
             </div>
         </div>
-
-        <div class="form-group col-md-6">
-            <label for="password">Введите пароль для подтверждения изменений</label>
-            <input class="form-control" type="password" ng-model="newProfile.password" id="password">
+        <hr>
+        <div class="col-md-6 mb-3">
+            <label for="validationDefault03">Введите пароль для подтверждения изменений</label>
+            <input type="password" class="form-control" ng-model="newProfile.password" id="validationDefault03" required>
         </div>
 
         <div>
