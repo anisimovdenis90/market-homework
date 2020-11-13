@@ -3,6 +3,7 @@ package ru.geekbrains.markethomework.controllers;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class OrderController {
                               @RequestParam(name = "address") String address,
                               @RequestParam(name = "phone") String phone
     ) {
-        User user = userService.findByUsername(principal.getName());
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
         Order order = new Order(user, cart, address, phone);
         orderService.saveNewOrder(order);
         cart.clear();

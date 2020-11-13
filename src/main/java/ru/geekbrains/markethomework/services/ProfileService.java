@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.markethomework.entities.Profile;
 import ru.geekbrains.markethomework.repositories.ProfileRepository;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ProfileService {
@@ -12,5 +14,9 @@ public class ProfileService {
 
     public void saveProfile(Profile profile) {
         profileRepository.save(profile);
+    }
+
+    public Optional<Profile> findByUsername(String username) {
+        return profileRepository.findByUsername(username);
     }
 }

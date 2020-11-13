@@ -1,15 +1,20 @@
 package ru.geekbrains.markethomework.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.markethomework.dto.ProfileDto;
 import ru.geekbrains.markethomework.entities.Profile;
 import ru.geekbrains.markethomework.entities.User;
+import ru.geekbrains.markethomework.exceptions.MarketError;
+import ru.geekbrains.markethomework.exceptions.ResourceNotFoundException;
 import ru.geekbrains.markethomework.services.ProfileService;
 import ru.geekbrains.markethomework.services.UserService;
 
 import java.security.Principal;
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/profile")
@@ -19,40 +24,20 @@ public class ProfileController {
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping()
-    public Profile getUserProfile(Principal principal) {
-        return userService.findByUsername(principal.getName()).getProfile();
+    @GetMapping(produces = "application/json")
+    public ProfileDto getUserProfile(Principal principal) {
+        return new ProfileDto(profileService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user")));
     }
 
-    @PutMapping()
-    public void saveUserProfile(Principal principal,
-                                @RequestParam(name = "password") String password,
-                                @RequestParam Map<String, String> params
-    ) {
-        User user = userService.findByUsername(principal.getName());
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            return;
+    @PutMapping(produces = "application/json")
+    public ResponseEntity<?> saveUserProfile(Principal principal, @RequestBody ProfileDto profileDto) {
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
+        if (profileDto.getConfirmationPassword() == null || !passwordEncoder.matches(profileDto.getConfirmationPassword(), user.getPassword())) {
+            return new ResponseEntity<>(new MarketError(HttpStatus.UNAUTHORIZED.value(), "Incorrect password"), HttpStatus.UNAUTHORIZED);
         }
-        Profile profile = user.getProfile();
-        String value;
-        if ((value = params.get("firstname")) != null && !value.isBlank()) {
-            profile.setFirstname(value);
-        }
-        if ((value = params.get("lastname")) != null && !value.isBlank()) {
-            profile.setLastname(value);
-        }
-        if ((value = params.get("birthday")) != null && !value.isBlank()) {
-            profile.setBirthday(value);
-        }
-        if ((value = params.get("phone")) != null && !value.isBlank()) {
-            profile.setPhone(value);
-        }
-        if ((value = params.get("gender")) != null && !value.isBlank()) {
-            profile.setGender(value);
-        }
-        if ((value = params.get("hometown")) != null && !value.isBlank()) {
-            profile.setHometown(value);
-        }
+        Profile profile = profileService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user"));
+        profile.setProfileForCurrentUserFromProfileDto(profileDto);
         profileService.saveProfile(profile);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

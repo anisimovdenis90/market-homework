@@ -3,6 +3,7 @@ package ru.geekbrains.markethomework.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.geekbrains.markethomework.dto.ProfileDto;
 
 import javax.persistence.*;
 
@@ -46,5 +47,14 @@ public class Profile {
         this.hometown = hometown;
         this.gender = gender;
         this.user = user;
+    }
+
+    public void setProfileForCurrentUserFromProfileDto(ProfileDto profileDto) {
+        this.firstname = profileDto.getFirstname();
+        this.lastname = profileDto.getLastname();
+        this.birthday = profileDto.getBirthday();
+        this.phone = profileDto.getPhone();
+        this.hometown = profileDto.getHometown();
+        this.gender = profileDto.getGender();
     }
 }
