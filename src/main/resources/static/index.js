@@ -19,6 +19,10 @@
                 templateUrl: 'signup/signup.html',
                 controller: 'signupController'
             })
+            .when('/profile', {
+                templateUrl: 'profile/profile.html',
+                controller: 'profileController'
+            })
             .when('/store', {
                 templateUrl: 'store/store.html',
                 controller: 'storeController'
@@ -30,9 +34,13 @@
             .when('/cart', {
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
-            }).when('/order', {
+            })
+            .when('/order', {
                 templateUrl: 'order/order.html',
                 controller: 'orderController'
+            })
+            .otherwise({
+                redirectTo: '/'
             });
 
         $httpProvider.interceptors.push(function ($q, $location) {

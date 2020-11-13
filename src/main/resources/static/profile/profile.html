@@ -1,0 +1,94 @@
+<div>
+    <h3>Личный кабинет</h3>
+
+    <form ng-submit="saveUserProfile()">
+        <div class="form-group col-md-6">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Имя</th>
+                    <th scope="col">{{userProfile.firstname}}</th>
+                </tr>
+                </thead>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.firstname" placeholder="Введите новое имя">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">{{userProfile.lastname}}</th>
+                </tr>
+                </thead>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.lastname" placeholder="Введите новую фамилию">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">День рождения</th>
+                    <th scope="col">{{userProfile.birthday}}</th>
+                </tr>
+                </thead>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.birthday" placeholder="Введите новую дату рождения">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">{{userProfile.phone}}</th>
+                </tr>
+                </thead>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.phone" placeholder="Введите новый телефон">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Город</th>
+                    <th scope="col">{{userProfile.hometown}}</th>
+                </tr>
+                </thead>
+            </table>
+            <input class="form-control" type="text" ng-model="newProfile.hometown" placeholder="Введите новый город проживания">
+        </div>
+
+        <div class="form-group col-md-6">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Пол</th>
+                    <th scope="col">{{userProfile.gender}}</th>
+                </tr>
+                </thead>
+            </table>
+            <span>Выберите пол: </span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="М" ng-model="newProfile.gender">
+                <label class="form-check-label" for="inlineRadio1">М</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Ж" ng-model="newProfile.gender">
+                <label class="form-check-label" for="inlineRadio2">Ж</label>
+            </div>
+        </div>
+        <hr>
+        <div class="col-md-6 mb-3">
+            <label for="validationDefault01">Введите пароль для подтверждения изменений</label>
+            <input type="password" class="form-control" ng-model="newProfile.confirmationPassword" id="validationDefault01" required>
+        </div>
+
+        <div class="form-group col-md-6">
+            <button class="btn btn-success" type="submit">Сохранить изменения</button>
+        </div>
+    </form>
+</div>

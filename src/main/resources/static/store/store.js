@@ -47,6 +47,11 @@ angular.module('app').controller('storeController', function ($scope, $http) {
         return arr;
     }
 
+    $scope.clearFilter = function () {
+            $scope.filter = null;
+            $scope.fillTable();
+    };
+
     $scope.fillTable();
     $scope.getCategoriesList();
 });
