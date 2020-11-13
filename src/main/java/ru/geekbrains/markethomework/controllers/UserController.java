@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.JwtResponse;
 import ru.geekbrains.markethomework.entities.Profile;
@@ -22,7 +23,7 @@ public class UserController {
     private final UserService userService;
     private final ProfileService profileService;
     private final RoleService roleService;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

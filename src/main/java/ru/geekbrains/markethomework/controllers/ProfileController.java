@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.ProfileDto;
 import ru.geekbrains.markethomework.entities.Profile;
@@ -22,7 +23,7 @@ import java.security.Principal;
 public class ProfileController {
     private final ProfileService profileService;
     private final UserService userService;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping(produces = "application/json")
     public ProfileDto getUserProfile(Principal principal) {
@@ -33,7 +34,7 @@ public class ProfileController {
     public ResponseEntity<?> saveUserProfile(Principal principal, @RequestBody ProfileDto profileDto) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
         if (profileDto.getConfirmationPassword() == null || !passwordEncoder.matches(profileDto.getConfirmationPassword(), user.getPassword())) {
-            return new ResponseEntity<>(new MarketError(HttpStatus.UNAUTHORIZED.value(), "Incorrect password"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), "Incorrect password"), HttpStatus.BAD_REQUEST);
         }
         Profile profile = profileService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user"));
         profile.setProfileForCurrentUserFromProfileDto(profileDto);

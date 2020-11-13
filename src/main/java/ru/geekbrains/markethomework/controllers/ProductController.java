@@ -1,6 +1,5 @@
 package ru.geekbrains.markethomework.controllers;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.ProductDto;
 import ru.geekbrains.markethomework.entities.Product;
 import ru.geekbrains.markethomework.exceptions.ResourceNotFoundException;
-import ru.geekbrains.markethomework.services.CategoryService;
 import ru.geekbrains.markethomework.services.ProductService;
 import ru.geekbrains.markethomework.utils.ProductFilter;
 
