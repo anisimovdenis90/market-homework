@@ -20,12 +20,12 @@ public class JsonTests {
         product.setTitle("TEST");
         product.setPrice(100);
 
-        assertThat(this.jackson.write(product)).hasJsonPathNumberValue("$.id");
-        assertThat(this.jackson.write(product)).hasJsonPathNumberValue("$.price");
-        assertThat(this.jackson.write(product)).hasJsonPathStringValue("$.title");
-        assertThat(this.jackson.write(product)).extractingJsonPathNumberValue("$.id").isEqualTo(1);
-        assertThat(this.jackson.write(product)).extractingJsonPathNumberValue("$.price").isEqualTo(100);
-        assertThat(this.jackson.write(product)).extractingJsonPathStringValue("$.title").isEqualTo("TEST");
+        assertThat(jackson.write(product)).hasJsonPathNumberValue("$.id")
+                .hasJsonPathNumberValue("$.price")
+                .hasJsonPathStringValue("$.title")
+                .extractingJsonPathNumberValue("$.id").isEqualTo(1);
+        assertThat(jackson.write(product)).extractingJsonPathStringValue("$.title").isEqualTo("TEST");
+        assertThat(jackson.write(product)).extractingJsonPathNumberValue("$.price").isEqualTo(100);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class JsonTests {
         product.setTitle("PROD");
         product.setPrice(100);
 
-        assertThat(this.jackson.parse(content)).isEqualTo(product);
-        assertThat(this.jackson.parseObject(content).getPrice()).isEqualTo(100);
+        assertThat(jackson.parse(content)).isEqualTo(product);
+        assertThat(jackson.parseObject(content).getPrice()).isEqualTo(100);
     }
 }
