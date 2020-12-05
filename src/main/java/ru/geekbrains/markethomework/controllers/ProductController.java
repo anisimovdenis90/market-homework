@@ -8,7 +8,6 @@ import ru.geekbrains.markethomework.dto.ProductDto;
 import ru.geekbrains.markethomework.entities.Product;
 import ru.geekbrains.markethomework.exceptions.ResourceNotFoundException;
 import ru.geekbrains.markethomework.services.ProductService;
-import ru.geekbrains.markethomework.soap.ProductSoap;
 import ru.geekbrains.markethomework.utils.ProductFilter;
 
 import java.util.Map;
