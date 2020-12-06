@@ -19,7 +19,7 @@ public class ProductEndpoint {
     @ResponsePayload
     public GetAllProductsResponse getAllProducts(@RequestPayload GetAllProductsRequest request) {
         GetAllProductsResponse response = new GetAllProductsResponse();
-        productService.findAllProducts().forEach(response.getProducts()::add);
+        productService.findAllProductsSoap().forEach(response.getProducts()::add);
         return response;
     }
 }

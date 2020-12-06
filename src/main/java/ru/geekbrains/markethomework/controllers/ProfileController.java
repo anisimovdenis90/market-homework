@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.ProfileDto;
@@ -27,7 +26,7 @@ public class ProfileController {
 
     @GetMapping(produces = "application/json")
     public ProfileDto getUserProfile(Principal principal) {
-        return new ProfileDto(profileService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user")));
+        return new ProfileDto(profileService.findProfileByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user")));
     }
 
     @PutMapping(produces = "application/json")
@@ -36,7 +35,7 @@ public class ProfileController {
         if (profileDto.getConfirmationPassword() == null || !passwordEncoder.matches(profileDto.getConfirmationPassword(), user.getPassword())) {
             return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), "Incorrect password"), HttpStatus.BAD_REQUEST);
         }
-        Profile profile = profileService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user"));
+        Profile profile = profileService.findProfileByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user"));
         profile.setProfileForCurrentUserFromProfileDto(profileDto);
         profileService.saveProfile(profile);
         return new ResponseEntity<>(HttpStatus.OK);

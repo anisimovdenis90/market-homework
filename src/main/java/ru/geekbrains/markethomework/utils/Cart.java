@@ -43,7 +43,7 @@ public class Cart {
 
     public void decrementOrRemove(Long productId) {
         Iterator<OrderItem> iter = items.iterator();
-        while(iter.hasNext()) {
+        while (iter.hasNext()) {
             OrderItem o = iter.next();
             if (o.getProduct().getId().equals(productId)) {
                 o.decrementQuantity();
@@ -58,7 +58,7 @@ public class Cart {
 
     public void remove(Long productId) {
         Iterator<OrderItem> iter = items.iterator();
-        while(iter.hasNext()) {
+        while (iter.hasNext()) {
             OrderItem o = iter.next();
             if (o.getProduct().getId().equals(productId)) {
                 iter.remove();

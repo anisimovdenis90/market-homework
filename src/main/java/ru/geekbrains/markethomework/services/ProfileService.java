@@ -2,6 +2,7 @@ package ru.geekbrains.markethomework.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.markethomework.dto.ProfileDto;
 import ru.geekbrains.markethomework.entities.Profile;
 import ru.geekbrains.markethomework.repositories.ProfileRepository;
 
@@ -16,7 +17,7 @@ public class ProfileService {
         profileRepository.save(profile);
     }
 
-    public Optional<Profile> findByUsername(String username) {
+    public Optional<Profile> findProfileByUsername(String username) {
         return profileRepository.findByUsername(username);
     }
 }

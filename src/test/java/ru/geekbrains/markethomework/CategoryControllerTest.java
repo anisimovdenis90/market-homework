@@ -8,7 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.geekbrains.markethomework.entities.Category;
+import ru.geekbrains.markethomework.dto.CategoryDto;
 import ru.geekbrains.markethomework.services.CategoryService;
 
 import java.util.ArrayList;
@@ -34,13 +34,13 @@ public class CategoryControllerTest {
     @Test
     @WithMockUser(username = "Bob", authorities = "USER")
     public void getAllCategoriesTest() throws Exception {
-        Category category = new Category();
-        category.setId(1L);
+        CategoryDto category = new CategoryDto();
+        category.setCategoryId(1L);
         category.setTitle("Products");
-        List<Category> list = new ArrayList<>(Arrays.asList(
+        List<CategoryDto> list = new ArrayList<>(Arrays.asList(
                 category
         ));
-        given(categoryService.findAll()).willReturn(list);
+        given(categoryService.findAllCategoriesDto()).willReturn(list);
 
         mvc.perform(get("/api/v1/categories")
                 .contentType(MediaType.APPLICATION_JSON))

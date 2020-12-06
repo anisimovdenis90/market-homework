@@ -1,8 +1,6 @@
 package ru.geekbrains.markethomework.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.PageDto;
 import ru.geekbrains.markethomework.dto.ProductDto;
@@ -12,7 +10,6 @@ import ru.geekbrains.markethomework.services.ProductService;
 import ru.geekbrains.markethomework.utils.ProductFilter;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -27,9 +24,7 @@ public class ProductController {
             page = 1;
         }
         ProductFilter productFilter = new ProductFilter(params);
-        Page<Product> content = productService.findAllProducts(productFilter.getSpec(), page - 1, 5);
-        Page<ProductDto> productsDto = new PageImpl<>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
-        return new PageDto<>(productsDto);
+        return productService.findAllProductsDto(productFilter.getSpec(), page - 1, 5);
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")

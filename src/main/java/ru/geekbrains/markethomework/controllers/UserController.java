@@ -3,10 +3,8 @@ package ru.geekbrains.markethomework.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.markethomework.dto.JwtResponse;
 import ru.geekbrains.markethomework.entities.Profile;
 import ru.geekbrains.markethomework.entities.User;
 import ru.geekbrains.markethomework.exceptions.MarketError;
@@ -28,8 +26,8 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> saveNewUser(@RequestParam String username,
-                            @RequestParam String password,
-                            @RequestParam String email
+                                         @RequestParam String password,
+                                         @RequestParam String email
     ) {
         if (userService.isPresent(username)) {
             return new ResponseEntity<>(

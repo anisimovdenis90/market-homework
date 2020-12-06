@@ -2,16 +2,18 @@ package ru.geekbrains.markethomework.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.markethomework.dto.PageDto;
+import ru.geekbrains.markethomework.dto.ProductDto;
 import ru.geekbrains.markethomework.entities.Product;
 import ru.geekbrains.markethomework.repositories.ProductRepository;
 import ru.geekbrains.markethomework.soap.ProductSoap;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +25,13 @@ public class ProductService {
         return productRepository.findAll(spec, PageRequest.of(page, size));
     }
 
-    public List<ProductSoap> findAllProducts() {
+    public PageDto<ProductDto> findAllProductsDto(Specification<Product> spec, int page, int size) {
+        Page<Product> content = productRepository.findAll(spec, PageRequest.of(page, size));
+        Page<ProductDto> productsDto = new PageImpl<>(content.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
+        return new PageDto<>(productsDto);
+    }
+
+    public List<ProductSoap> findAllProductsSoap() {
         List<Product> products = productRepository.findAll();
         List<ProductSoap> soapList = products.stream().map(p -> {
             ProductSoap ps = new ProductSoap();

@@ -17,7 +17,7 @@ public class ProductFilter {
         spec = Specification.where(null);
 
         String filterTitle = params.get("title");
-        if (filterTitle !=null && !filterTitle.isBlank()) {
+        if (filterTitle != null && !filterTitle.isBlank()) {
             spec = spec.and(ProductSpecifications.titleLike(filterTitle));
             filterDefinitionBuilder.append("&title=").append(filterTitle);
         }
