@@ -1,20 +1,37 @@
-<div>
-    <form novalidate ng-submit="saveNewUser()">
-        <h1 class="h3 mb-3 font-weight-normal">Регистрация нового пользователя</h1>
-        <div class="form-group col-md-6">
-            <label for="username">Имя</label>
-            <input class="form-control" type="text" ng-model="newUser.username" id="username">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="password">Пароль</label>
-            <input class="form-control" type="password" ng-model="newUser.password" id="password">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="email">Email</label>
-            <input class="form-control" type="text" ng-model="newUser.email" id="email">
-        </div>
-        <div>
-            <button class="btn btn-success" type="submit">Зарегистрироваться</button>
-        </div>
+<div class="mb-3 text-center">
+    <form class="form-signin" ng-submit="tryToRegister()" style="max-width: 350px; padding: 15px; margin: 0 auto;">
+        <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
+        <input type="text" ng-model="newUser.username" id="inputUsername" class="form-control" placeholder="Имя пользователя" style="margin-bottom: 10px;" required="">
+        <input type="text" ng-model="newUser.email" id="inputEmail" class="form-control" placeholder="E-mail" style="margin-bottom: 10px;" required="">
+        <input type="password" ng-model="newUser.password" id="inputPassword" class="form-control" placeholder="Пароль" style="margin-bottom: 10px;" required="">
+        <input type="password" ng-model="newUser.confirmationPassword" id="inputConfirmationPassword" class="form-control" placeholder="Подтверждение пароля" style="margin-bottom: 10px;" required="">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
     </form>
 </div>
+
+
+
+<!--<div>-->
+<!--    <form ng-submit="saveNewUser()">-->
+<!--        <h1 class="h3 mb-3 font-weight-normal">Регистрация нового пользователя</h1>-->
+<!--        <div class="form-group col-md-6">-->
+<!--            <label for="username">Имя</label>-->
+<!--            <input class="form-control" type="text" ng-model="newUser.username" id="username">-->
+<!--        </div>-->
+<!--        <div class="form-group col-md-6">-->
+<!--            <label for="password">Пароль</label>-->
+<!--            <input class="form-control" type="password" ng-model="newUser.password" id="password" required>-->
+<!--        </div>-->
+<!--        <div class="form-group col-md-6">-->
+<!--            <label for="confirmationPassword">Подтвердите пароль</label>-->
+<!--            <input class="form-control" type="password" ng-model="newUser.confirmationPassword" id="confirmationPassword" required>-->
+<!--        </div>-->
+<!--        <div class="form-group col-md-6">-->
+<!--            <label for="email">Email</label>-->
+<!--            <input class="form-control" type="text" ng-model="newUser.email" id="email">-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <button class="btn btn-success" type="submit">Зарегистрироваться</button>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->

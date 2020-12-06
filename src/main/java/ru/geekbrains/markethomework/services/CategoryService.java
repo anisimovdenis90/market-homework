@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.markethomework.dto.CategoryDto;
 import ru.geekbrains.markethomework.entities.Category;
+import ru.geekbrains.markethomework.exceptions.ResourceNotFoundException;
 import ru.geekbrains.markethomework.repositories.CategoryRepository;
 
 import java.util.List;
@@ -20,5 +21,16 @@ public class CategoryService {
 
     public List<CategoryDto> findAllCategoriesDto() {
         return categoryRepository.findAll().stream().map(CategoryDto::new).collect(Collectors.toList());
+    }
+
+    public Category findCategoryByName(String name) {
+        return categoryRepository.findCategoryByTitle(name).orElseThrow(() -> new ResourceNotFoundException("Unable to find category by name " + name));
+    }
+
+    public void saveCategoryFromCategoryDto(CategoryDto c) {
+        Category category = new Category();
+        category.setId(null);
+        category.setTitle(c.getTitle());
+        categoryRepository.save(category);
     }
 }

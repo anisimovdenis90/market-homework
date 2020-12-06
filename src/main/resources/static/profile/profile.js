@@ -20,5 +20,14 @@ angular.module('app').controller('profileController', function ($scope, $http) {
             });
     };
 
+    $scope.getCategoriesList = function () {
+        $http({
+            url: contextPath + '/api/v1/categories',
+            method: 'GET'
+        })
+            .then(function (response) {
+                $scope.CategoriesList = response.data;
+            });
+    };
     $scope.fillTable();
 });

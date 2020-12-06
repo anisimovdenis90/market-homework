@@ -1,9 +1,9 @@
 package ru.geekbrains.markethomework.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.CategoryDto;
 import ru.geekbrains.markethomework.services.CategoryService;
 
@@ -18,5 +18,11 @@ public class CategoryController {
     @GetMapping(produces = "application/json")
     public List<CategoryDto> getAllCategories() {
         return categoryService.findAllCategoriesDto();
+    }
+
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> createProduct(@RequestBody CategoryDto c) {
+        categoryService.saveCategoryFromCategoryDto(c);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

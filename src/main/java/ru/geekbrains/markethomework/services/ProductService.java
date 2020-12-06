@@ -9,17 +9,18 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.markethomework.dto.PageDto;
 import ru.geekbrains.markethomework.dto.ProductDto;
 import ru.geekbrains.markethomework.entities.Product;
+import ru.geekbrains.markethomework.exceptions.ResourceNotFoundException;
 import ru.geekbrains.markethomework.repositories.ProductRepository;
 import ru.geekbrains.markethomework.soap.ProductSoap;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CategoryService categoryService;
 
     public Page<Product> findAllProducts(Specification<Product> spec, int page, int size) {
         return productRepository.findAll(spec, PageRequest.of(page, size));
@@ -44,12 +45,24 @@ public class ProductService {
         return soapList;
     }
 
-    public Optional<Product> findProductById(Long id) {
-        return productRepository.findById(id);
+    public Product findProductById(Long id) {
+        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
+    }
+
+    public ProductDto findProductDtoById(Long id) {
+        return productRepository.findProductDtoById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
     }
 
     public Product saveProduct(Product product) {
         return productRepository.save(product);
+    }
+
+    public Product saveProductFromProductDto(ProductDto p) {
+        Product newProduct = new Product();
+        newProduct.setTitle(p.getTitle());
+        newProduct.setPrice(p.getPrice());
+        newProduct.setCategory(categoryService.findCategoryByName(p.getCategoryTitle()));
+        return productRepository.save(newProduct);
     }
 
     public void deleteById(Long id) {
