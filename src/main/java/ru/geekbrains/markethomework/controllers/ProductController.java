@@ -3,10 +3,13 @@ package ru.geekbrains.markethomework.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.PageDto;
 import ru.geekbrains.markethomework.dto.ProductDto;
 import ru.geekbrains.markethomework.entities.Product;
+import ru.geekbrains.markethomework.exceptions.InputDataError;
 import ru.geekbrains.markethomework.services.ProductService;
 import ru.geekbrains.markethomework.utils.ProductFilter;
 
@@ -34,7 +37,11 @@ public class ProductController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> createProduct(@RequestBody ProductDto p) {
+    public ResponseEntity<?> createProduct(@RequestBody @Validated ProductDto p, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(new InputDataError(bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);
+        }
+
         p.setId(null);
         productService.saveProductFromProductDto(p);
         return new ResponseEntity<>(HttpStatus.CREATED);

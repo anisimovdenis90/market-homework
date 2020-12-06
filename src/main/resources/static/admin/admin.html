@@ -3,15 +3,15 @@
     <form ng-submit="submitCreateNewProduct()">
         <div class="form-group col-md-6">
             <label for="productTitle">Название</label>
-            <input class="form-control" type="text" ng-model="newProduct.title" id="productTitle">
+            <input class="form-control" type="text" ng-model="newProduct.title" id="productTitle" required>
         </div>
         <div class="form-group col-md-6">
             <label for="productPrice">Цена</label>
-            <input class="form-control" type="number" ng-model="newProduct.price" id="productPrice">
+            <input class="form-control" type="number" ng-model="newProduct.price" id="productPrice" required>
         </div>
         <div class="form-group col-md-6">
             <label for="productCategoryTitle">Категория</label>
-            <select class="form-control" ng-model="newProduct.categoryTitle" id="productCategoryTitle">
+            <select class="form-control" ng-model="newProduct.categoryTitle" id="productCategoryTitle" required>
                 <option value="{{c.title}}" ng-repeat="c in CategoriesList">{{c.title}}</option>
             </select>
         </div>

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.geekbrains.markethomework.entities.Profile;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 @NoArgsConstructor
 public class ProfileDto {
@@ -15,6 +17,7 @@ public class ProfileDto {
     private String phone;
     private String hometown;
     private String gender;
+    @NotBlank
     private String confirmationPassword;
 
     public ProfileDto(Profile p) {

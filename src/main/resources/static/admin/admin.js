@@ -10,18 +10,21 @@ angular.module('app').controller('adminController', function ($scope, $http) {
 
     $scope.submitCreateNewProduct = function () {
         $http.post(contextPath + '/api/v1/products', $scope.newProduct)
-            .then(function (response) {
+            .then(function successCallback(response) {
+                alert('Регистрация выполнена успешно');
                 $scope.newProduct = null;
-                alert('Добавлен новый продукт');
+            }, function errorCallback(response) {
+                window.alert(response.data.message);
             });
     };
 
     $scope.submitCreateNewCategory = function () {
         $http.post(contextPath + '/api/v1/categories', $scope.category)
-            .then(function (response) {
-                $scope.category = null;
+            .then(function successCallback(response) {
                 alert('Создана новая категория');
-                $scope.getCategoriesList();
+                $scope.category = null;
+            }, function errorCallback(response) {
+                window.alert(response.data.message);
             });
     };
 

@@ -33,4 +33,8 @@ public class CategoryService {
         category.setTitle(c.getTitle());
         categoryRepository.save(category);
     }
+
+    public boolean isPresent(String name) {
+        return categoryRepository.existsByTitle(name);
+    }
 }

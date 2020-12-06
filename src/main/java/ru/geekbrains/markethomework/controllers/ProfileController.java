@@ -5,10 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.ProfileDto;
 import ru.geekbrains.markethomework.entities.Profile;
 import ru.geekbrains.markethomework.entities.User;
+import ru.geekbrains.markethomework.exceptions.InputDataError;
 import ru.geekbrains.markethomework.exceptions.MarketError;
 import ru.geekbrains.markethomework.exceptions.ResourceNotFoundException;
 import ru.geekbrains.markethomework.services.ProfileService;
@@ -30,8 +33,12 @@ public class ProfileController {
     }
 
     @PutMapping(produces = "application/json")
-    public ResponseEntity<?> saveUserProfile(Principal principal, @RequestBody ProfileDto profileDto) {
+    public ResponseEntity<?> saveUserProfile(Principal principal, @RequestBody @Validated ProfileDto profileDto, BindingResult bindingResult) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(new InputDataError(bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);
+        }
+
         if (profileDto.getConfirmationPassword() == null || !passwordEncoder.matches(profileDto.getConfirmationPassword(), user.getPassword())) {
             return new ResponseEntity<>(new MarketError(HttpStatus.BAD_REQUEST.value(), "Incorrect password"), HttpStatus.BAD_REQUEST);
         }

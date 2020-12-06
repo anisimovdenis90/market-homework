@@ -15,6 +15,10 @@ public class SystemUserDto {
 
     @Email(message = "Wrong format of email")
     private String email;
+
+    @Size(min = 3, message = "Password length must contains at least 3 symbols")
     private String password;
+
+    @Size(min = 3, message = "Password length must contains at least 3 symbols")
     private String confirmationPassword;
 }

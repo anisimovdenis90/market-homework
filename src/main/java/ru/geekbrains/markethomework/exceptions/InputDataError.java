@@ -11,18 +11,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class RegistrationError {
+public class InputDataError {
     private int status;
     private List<String> message;
     private Date timestamp;
 
-    public RegistrationError(String message) {
+    public InputDataError(String message) {
         this.status = HttpStatus.BAD_REQUEST.value();
         this.message = new ArrayList<>(Arrays.asList(message));
         this.timestamp = new Date();
     }
 
-    public RegistrationError(List<ObjectError> errors) {
+    public InputDataError(List<ObjectError> errors) {
         this.status = HttpStatus.BAD_REQUEST.value();
         this.message = errors.stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
         this.timestamp = new Date();
