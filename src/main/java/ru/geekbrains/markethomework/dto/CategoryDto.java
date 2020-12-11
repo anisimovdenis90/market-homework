@@ -10,7 +10,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class CategoryDto {
     private Long categoryId;
-    @Size(min = 3, message = "Wrong category name, at least 3 symbols")
+
+    @Size(min = 3, max = 255, message = "Wrong category name, at least 3 symbols")
     private String title;
 
     public CategoryDto(Category category) {
