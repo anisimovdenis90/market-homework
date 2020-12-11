@@ -20,20 +20,14 @@ angular.module('app').controller('storeController', function ($scope, $http) {
     };
 
     $scope.getCategoriesList = function () {
-        $http({
-            url: contextPath + '/api/v1/categories',
-            method: 'GET'
-        })
+        $http.get(contextPath + '/api/v1/categories')
             .then(function (response) {
                 $scope.CategoriesList = response.data;
             });
     };
 
     $scope.addToCart = function (productId) {
-        $http({
-            url: contextPath + '/api/v1/cart/add/' + productId,
-            method: 'GET'
-        })
+        $http.get(contextPath + '/api/v1/cart/add/' + productId)
             .then(function (response) {
                 console.log('ok');
             });

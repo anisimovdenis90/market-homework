@@ -1,11 +1,15 @@
 package ru.geekbrains.markethomework.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.PageDto;
 import ru.geekbrains.markethomework.dto.ProductDto;
 import ru.geekbrains.markethomework.entities.Product;
-import ru.geekbrains.markethomework.exceptions.ResourceNotFoundException;
+import ru.geekbrains.markethomework.exceptions.InputDataError;
 import ru.geekbrains.markethomework.services.ProductService;
 import ru.geekbrains.markethomework.utils.ProductFilter;
 
@@ -28,19 +32,25 @@ public class ProductController {
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public Product getProductById(@PathVariable Long id) {
-        return productService.findProductById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
+    public ProductDto getProductById(@PathVariable Long id) {
+        return productService.findProductDtoById(id);
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public Product createProduct(@RequestBody Product p) {
+    public ResponseEntity<?> createProduct(@RequestBody @Validated ProductDto p, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(new InputDataError(bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);
+        }
+
         p.setId(null);
-        return productService.saveProduct(p);
+        productService.saveProductFromProductDto(p);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(consumes = "application/json", produces = "application/json")
-    public Product updateProduct(@RequestBody Product p) {
-        return productService.saveProduct(p);
+    public ResponseEntity<?> updateProduct(@RequestBody Product p) {
+        productService.saveProduct(p);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping

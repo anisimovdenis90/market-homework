@@ -1,16 +1,35 @@
 <div>
     <h3>Добавить новый товар</h3>
-    <form novalidate ng-submit="submitCreateNewProduct()">
+    <form ng-submit="submitCreateNewProduct()">
         <div class="form-group col-md-6">
-            <label for="elementTitle">Название</label>
-            <input class="form-control" type="text" ng-model="newProduct.title" id="elementTitle">
+            <label for="productTitle">Название</label>
+            <input class="form-control" type="text" ng-model="newProduct.title" id="productTitle" required>
         </div>
         <div class="form-group col-md-6">
-            <label for="elementPrice">Цена</label>
-            <input class="form-control" type="number" ng-model="newProduct.price" id="elementPrice">
+            <label for="productPrice">Цена</label>
+            <input class="form-control" type="number" ng-model="newProduct.price" id="productPrice" required>
         </div>
-        <div>
-            <button class="btn btn-success" type="submit">Сохранить</button>
+        <div class="form-group col-md-6">
+            <label for="productCategoryTitle">Категория</label>
+            <select class="form-control" ng-model="newProduct.categoryTitle" id="productCategoryTitle" required>
+                <option value="{{c.title}}" ng-repeat="c in CategoriesList">{{c.title}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <button class="btn btn-success" type="submit">Сохранить новый товар</button>
+        </div>
+    </form>
+</div>
+<br>
+<div>
+    <h3>Создать новую категорию</h3>
+    <form ng-submit="submitCreateNewCategory()">
+        <div class="form-group col-md-6">
+            <label for="categoryTitle">Название категории</label>
+            <input class="form-control" type="text" ng-model="category.title" id="categoryTitle" required>
+        </div>
+        <div class="form-group col-md-6">
+            <button class="btn btn-success" type="submit">Сохранить новую категорию</button>
         </div>
     </form>
 </div>

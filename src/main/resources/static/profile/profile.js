@@ -3,20 +3,25 @@ angular.module('app').controller('profileController', function ($scope, $http) {
 
     $scope.saveUserProfile = function () {
         $http.put(contextPath + '/api/v1/profile', $scope.newProfile)
-            .then(function (response) {
-                alert('Профиль обновлен');
+            .then(function successCallback(response) {
+                alert('Профиль успешно обновлен');
                 $scope.newProfile = null;
-                $scope.fillTable();
-           });
+            }, function errorCallback(response) {
+                window.alert(response.data.message);
+            });
     };
 
     $scope.fillTable = function () {
-        $http({
-            url: contextPath + '/api/v1/profile',
-            method: 'GET'
-        })
+        $http.get(contextPath + '/api/v1/profile')
             .then(function (response) {
                 $scope.userProfile = response.data;
+            });
+    };
+
+    $scope.getCategoriesList = function () {
+        $http.get(contextPath + '/api/v1/categories')
+            .then(function (response) {
+                $scope.CategoriesList = response.data;
             });
     };
 
