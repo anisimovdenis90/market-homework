@@ -10,6 +10,7 @@ import ru.geekbrains.markethomework.dto.PageDto;
 import ru.geekbrains.markethomework.dto.ProductDto;
 import ru.geekbrains.markethomework.entities.Product;
 import ru.geekbrains.markethomework.exceptions.InputDataError;
+import ru.geekbrains.markethomework.exceptions.ResourceNotFoundException;
 import ru.geekbrains.markethomework.services.ProductService;
 import ru.geekbrains.markethomework.utils.ProductFilter;
 
@@ -21,7 +22,7 @@ import java.util.Map;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping(produces = "application/json") // /api/v1/products
+    @GetMapping(produces = "application/json")
     public PageDto<ProductDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
                                               @RequestParam Map<String, String> params) {
         if (page < 1) {
@@ -33,7 +34,7 @@ public class ProductController {
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ProductDto getProductById(@PathVariable Long id) {
-        return productService.findProductDtoById(id);
+        return productService.findProductDtoById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")

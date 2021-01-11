@@ -24,7 +24,7 @@ public class CategoryController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> createProduct(@RequestBody @Validated CategoryDto c, BindingResult bindingResult) {
+    public ResponseEntity<?> saveCategory(@RequestBody @Validated CategoryDto c, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(new InputDataError(bindingResult.getAllErrors()), HttpStatus.BAD_REQUEST);
         }

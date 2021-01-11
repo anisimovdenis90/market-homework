@@ -36,7 +36,7 @@ public class Cart {
                 return;
             }
         }
-        Product p = productService.findProductById(productId);
+        Product p = productService.findProductById(productId).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + productId));
         items.add(new OrderItem(p));
         recalculate();
     }

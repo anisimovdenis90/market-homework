@@ -47,7 +47,7 @@ angular.module('app').controller('cartController', function ($scope, $http) {
                 phone: $scope.newOrder.phone
             }
         }).then(function (response) {
-                alert('Заказ успешно сформирован');
+                alert('Заказ успешно сформирован. Номер вашего заказа # ' + response.data);
                 $scope.newOrder = null;
                 $scope.cartContentRequest();
             });

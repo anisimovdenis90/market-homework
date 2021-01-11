@@ -1,4 +1,4 @@
-package ru.geekbrains.markethomework;
+package ru.geekbrains.markethomework.repositories;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

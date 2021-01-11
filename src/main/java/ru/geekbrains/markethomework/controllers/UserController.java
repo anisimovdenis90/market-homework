@@ -18,7 +18,7 @@ import ru.geekbrains.markethomework.services.UserService;
 import java.util.Arrays;
 
 @RestController
-@RequestMapping
+@RequestMapping(consumes = "application/json")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
