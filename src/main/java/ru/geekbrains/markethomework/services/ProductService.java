@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.markethomework.dto.PageDto;
 import ru.geekbrains.markethomework.dto.ProductDto;
 import ru.geekbrains.markethomework.entities.Product;
-import ru.geekbrains.markethomework.exceptions.ResourceNotFoundException;
 import ru.geekbrains.markethomework.repositories.ProductRepository;
 import ru.geekbrains.markethomework.soap.ProductSoap;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,12 +45,12 @@ public class ProductService {
         return soapList;
     }
 
-    public Product findProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
+    public Optional<Product> findProductById(Long id) {
+        return productRepository.findById(id);
     }
 
-    public ProductDto findProductDtoById(Long id) {
-        return productRepository.findProductDtoById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to find product with id: " + id));
+    public Optional<ProductDto> findProductDtoById(Long id) {
+        return productRepository.findProductDtoById(id);
     }
 
     public Product saveProduct(Product product) {

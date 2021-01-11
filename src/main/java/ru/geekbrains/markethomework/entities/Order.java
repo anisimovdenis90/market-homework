@@ -7,6 +7,8 @@ import org.hibernate.annotations.Cascade;
 import ru.geekbrains.markethomework.utils.Cart;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 

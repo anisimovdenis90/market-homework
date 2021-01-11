@@ -20,19 +20,19 @@ import ru.geekbrains.markethomework.services.UserService;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("api/v1/profile")
+@RequestMapping(value = "api/v1/profile", produces = "application/json", consumes = "application/json")
 @RequiredArgsConstructor
 public class ProfileController {
     private final ProfileService profileService;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping(produces = "application/json")
+    @GetMapping
     public ProfileDto getUserProfile(Principal principal) {
         return new ProfileDto(profileService.findProfileByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Unable to find profile for current user")));
     }
 
-    @PutMapping(produces = "application/json")
+    @PutMapping
     public ResponseEntity<?> saveUserProfile(Principal principal, @RequestBody @Validated ProfileDto profileDto, BindingResult bindingResult) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
         if (bindingResult.hasErrors()) {

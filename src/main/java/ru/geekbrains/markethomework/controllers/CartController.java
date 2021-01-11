@@ -1,10 +1,8 @@
 package ru.geekbrains.markethomework.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.markethomework.dto.CartDto;
 import ru.geekbrains.markethomework.utils.Cart;
 
@@ -25,11 +23,12 @@ public class CartController {
     }
 
     @GetMapping("/remove/{product_id}")
+    @ResponseStatus(HttpStatus.OK)
     public void removeProduct(@PathVariable(name = "product_id") Long productId) {
         cart.remove(productId);
     }
 
-    @GetMapping
+    @GetMapping(produces = "application/json")
     public CartDto getCartDto() {
         cart.recalculate();
         return new CartDto(cart);
