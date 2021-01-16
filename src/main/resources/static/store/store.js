@@ -31,7 +31,7 @@ angular.module('app').controller('storeController', function ($scope, $http) {
             .then(function (response) {
                 console.log('ok');
             });
-    }
+    };
 
     $scope.generatePagesInd = function(startPage, endPage) {
         let arr = [];
@@ -39,7 +39,7 @@ angular.module('app').controller('storeController', function ($scope, $http) {
             arr.push(i);
         }
         return arr;
-    }
+    };
 
     $scope.clearFilter = function () {
             $scope.filter = null;

@@ -11,7 +11,7 @@ angular.module('app').controller('adminController', function ($scope, $http) {
     $scope.submitCreateNewProduct = function () {
         $http.post(contextPath + '/api/v1/products', $scope.newProduct)
             .then(function successCallback(response) {
-                alert('Регистрация выполнена успешно');
+                alert('Создан новый продукт');
                 $scope.newProduct = null;
             }, function errorCallback(response) {
                 window.alert(response.data.message);

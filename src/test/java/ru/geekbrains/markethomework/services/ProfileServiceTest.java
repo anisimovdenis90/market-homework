@@ -12,7 +12,6 @@ import ru.geekbrains.markethomework.repositories.ProfileRepository;
 
 import java.util.Optional;
 
-
 @SpringBootTest(classes = ProfileService.class)
 public class ProfileServiceTest {
     @Autowired
