@@ -17,7 +17,7 @@ public class OrderItemDto {
     public OrderItemDto(OrderItem o) {
         this.productId = o.getProduct().getId();
         this.productTitle = o.getProduct().getTitle();
-        this.productTitle = o.getProduct().getCategory().getTitle();
+        this.categoryTitle = o.getProduct().getCategory().getTitle();
         this.quantity = o.getQuantity();
         this.pricePerProduct = o.getPricePerProduct();
         this.price = o.getPrice();

@@ -18,12 +18,5 @@ angular.module('app').controller('profileController', function ($scope, $http) {
             });
     };
 
-    $scope.getCategoriesList = function () {
-        $http.get(contextPath + '/api/v1/categories')
-            .then(function (response) {
-                $scope.CategoriesList = response.data;
-            });
-    };
-
     $scope.fillTable();
 });

@@ -1,6 +1,7 @@
 package ru.geekbrains.markethomework.configs;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,12 +21,15 @@ public class JwtTokenUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+    @Value("${jwt.lifetime}")
+    private Long jwtLifeTine;
+
+    private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) throws ExpiredJwtException {
         Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
 
-    public String getUsernameFromToken(String token) {
+    public String getUsernameFromToken(String token) throws ExpiredJwtException {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -52,22 +56,19 @@ public class JwtTokenUtil {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         claims.put("roles", rolesList);
-        return doGenerateToken(claims, userDetails.getUsername());
-    }
 
-    private String doGenerateToken(Map<String, Object> claims, String subject) {
         Date issuedDate = new Date();
-        Date expiredDate = new Date(issuedDate.getTime() + 60 * 60 * 1000); // todo
+        Date expiredDate = new Date(issuedDate.getTime() + jwtLifeTine);
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(subject)
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(issuedDate)
                 .setExpiration(expiredDate)
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 
-    private Claims getAllClaimsFromToken(String token) {
+    private Claims getAllClaimsFromToken(String token) throws ExpiredJwtException {
         return Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
